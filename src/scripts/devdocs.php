@@ -127,7 +127,11 @@ class DevDocs {
     foreach ($this->results as $level => $results) {
       foreach ($results as $result) {
         $title = empty($result->type) ? $result->name : "$result->name ($result->type)";
-        $this->workflows->result($result->name, self::$baseUrl . $result->documentation . '/' . $result->path, $title, $result->path, $result->documentation . '.png', 'yes', $result->name);
+        if ($result->documentation == 'php') {
+          $this->workflows->result($result->name, 'http://php.net/manual/en/' . $result->path, $title, $result->path, $result->documentation . '.png', 'yes', $result->name);
+        } else {
+          $this->workflows->result($result->name, self::$baseUrl . $result->documentation . '/' . $result->path, $title, $result->path, $result->documentation . '.png', 'yes', $result->name);
+        }
       }
     }
     echo $this->workflows->toxml();
